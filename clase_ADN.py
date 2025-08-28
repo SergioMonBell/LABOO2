@@ -45,12 +45,29 @@ class DNA:
         print(f"Composición porcentual: {self.composicion_porcentual()}")
 
 
-# Ejemplo de uso
-if __name__ == "__main__":
-    adn1 = DNA("ATGCGTA")
-    adn2 = DNA("ATGCCGA")
+def pedir_secuencia(mensaje):
+    """Solicita al usuario una secuencia válida de ADN."""
+    while True:
+        try:
+            secuencia = input(mensaje).strip().upper()
+            if not secuencia.isalpha():
+                raise ValueError("La secuencia debe contener solo letras.")
+            if any(base not in "ACGT" for base in secuencia):
+                raise ValueError("La secuencia solo puede contener A, C, G y T.")
+            return secuencia
+        except ValueError as e:
+            print(f"Error: {e}. Inténtalo de nuevo.")
 
-    print("ADN 1:")
+
+if __name__ == "__main__":
+    print("=== Análisis de ADN ===")
+    sec1 = pedir_secuencia("Ingrese la primera secuencia de ADN: ")
+    sec2 = pedir_secuencia("Ingrese la segunda secuencia de ADN: ")
+
+    adn1 = DNA(sec1)
+    adn2 = DNA(sec2)
+
+    print("\nADN 1:")
     adn1.imprimir()
     print("\nADN 2:")
     adn2.imprimir()
@@ -58,6 +75,9 @@ if __name__ == "__main__":
     print("\nSimilitud entre ADN 1 y ADN 2:")
     print(f"{adn1.similitud(adn2):.2f}%")
 
-    print("\nFusionando ADN 1 y ADN 2...")
-    adn1.fusionar(adn2)
-    adn1.imprimir()
+    try:
+        print("\nFusionando ADN 1 y ADN 2...")
+        adn1.fusionar(adn2)
+        adn1.imprimir()
+    except ValueError as e:
+        print(f"Error al fusionar: {e}")

@@ -4,7 +4,7 @@ class Coordenada:
         self.coord_y = coord_y
 
     def mostrar_coordenada(self):
-        print(f"({self.coord_x},{self.coord_y})")
+        print(f"({self.coord_x}, {self.coord_y})")
 
 
 class Cuadrado:
@@ -22,14 +22,24 @@ class Cuadrado:
         self.vertice4.mostrar_coordenada()
 
 
-# Creación de instancias de Coordenada
-vertice1 = Coordenada(1, 1)
-vertice2 = Coordenada(10, 1)
-vertice3 = Coordenada(10, 10)
-vertice4 = Coordenada(1, 10)
+def pedir_coordenada(nombre_vertice):
+    """Solicita al usuario una coordenada (x, y) válida."""
+    while True:
+        try:
+            x = float(input(f"Ingrese la coordenada X de {nombre_vertice}: "))
+            y = float(input(f"Ingrese la coordenada Y de {nombre_vertice}: "))
+            return Coordenada(x, y)
+        except ValueError:
+            print("Error: Debe ingresar un número válido para la coordenada.")
 
-# Creación de instancia de Cuadrado
-cuadrado = Cuadrado(vertice1, vertice2, vertice3, vertice4)
 
-# Llamada al método para mostrar los vértices
-cuadrado.mostrar_vertices()
+if __name__ == "__main__":
+    print("=== Creación de un Cuadrado ===")
+
+    v1 = pedir_coordenada("Vértice 1")
+    v2 = pedir_coordenada("Vértice 2")
+    v3 = pedir_coordenada("Vértice 3")
+    v4 = pedir_coordenada("Vértice 4")
+
+    cuadrado = Cuadrado(v1, v2, v3, v4)
+    cuadrado.mostrar_vertices()

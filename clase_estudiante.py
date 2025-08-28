@@ -1,16 +1,14 @@
 import datetime
 
 class Estudiante:
-    nombre = ""
-    fecha_nacimiento = ""
-    escuela = ""
-    universidad = ""
-
     def __init__(self, nombre, fecha_nacimiento_str, escuela, universidad):
-        self.nombre = nombre
-        self.fecha_nacimiento = datetime.datetime.strptime(fecha_nacimiento_str, "%d/%m/%Y").date()
-        self.escuela = escuela
-        self.universidad = universidad
+        try:
+            self.nombre = nombre
+            self.fecha_nacimiento = datetime.datetime.strptime(fecha_nacimiento_str, "%d/%m/%Y").date()
+            self.escuela = escuela
+            self.universidad = universidad
+        except ValueError:
+            raise ValueError("La fecha de nacimiento debe tener el formato dd/mm/yyyy y ser válida.")
 
     def imprimir(self):
         print("==============INFORMACION==============")
@@ -19,6 +17,22 @@ class Estudiante:
         print(f"Escuela: {self.escuela}")
         print(f"Universidad: {self.universidad}")
 
-# Crear instancia y mostrar información
-leandro = Estudiante("Leandro", "01/01/2008", "Sistemas", "UCSM")
-leandro.imprimir()
+
+def pedir_datos_estudiante():
+    """Solicita los datos de un estudiante con validación."""
+    nombre = input("Ingrese el nombre: ").strip()
+    while True:
+        fecha_nacimiento_str = input("Ingrese la fecha de nacimiento (dd/mm/yyyy): ").strip()
+        try:
+            datetime.datetime.strptime(fecha_nacimiento_str, "%d/%m/%Y")  # Validación de fecha
+            break
+        except ValueError:
+            print("Error: Formato de fecha inválido. Use dd/mm/yyyy.")
+    escuela = input("Ingrese la escuela: ").strip()
+    universidad = input("Ingrese la universidad: ").strip()
+    return Estudiante(nombre, fecha_nacimiento_str, escuela, universidad)
+
+
+if __name__ == "__main__":
+    estudiante = pedir_datos_estudiante()
+    estudiante.imprimir()

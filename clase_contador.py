@@ -16,10 +16,40 @@ class Contador:
         print(f"Contador incrementado a: {self.valor}")
 
 
-# Ejemplo de uso
+def pedir_entero(mensaje):
+    """Solicita al usuario un número entero válido."""
+    while True:
+        try:
+            return int(input(mensaje))
+        except ValueError:
+            print("Error: Debes ingresar un número entero.")
+
+
 if __name__ == "__main__":
-    contador = Contador()
-    contador.obtener()       # Muestra 0
-    contador.incrementar()   # Incrementa a 1
-    contador.incrementar()   # Incrementa a 2
-    contador.reiniciar()     # Reinicia a 0
+    print("=== Programa Contador ===")
+    valor_inicial = pedir_entero("Ingrese el valor inicial del contador: ")
+    contador = Contador(valor_inicial)
+
+    while True:
+        print("\nOpciones:")
+        print("1. Mostrar valor del contador")
+        print("2. Incrementar contador")
+        print("3. Reiniciar contador")
+        print("4. Salir")
+
+        opcion = input("Seleccione una opción (1-4): ")
+
+        try:
+            if opcion == "1":
+                contador.obtener()
+            elif opcion == "2":
+                contador.incrementar()
+            elif opcion == "3":
+                contador.reiniciar()
+            elif opcion == "4":
+                print("Saliendo del programa...")
+                break
+            else:
+                raise ValueError("Opción no válida.")
+        except ValueError as e:
+            print(f"Error: {e}")
